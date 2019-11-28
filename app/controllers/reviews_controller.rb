@@ -4,9 +4,15 @@ class ReviewsController < ApplicationController
     @restaurant = Restaurant.find(params[:restaurant_id])
     @review.restaurant = @restaurant
     if @review.save
-      redirect_to restaurant_path(@restaurant)
+      respond_to do |format|
+        format.html { redirect_to restaurant_path(@restaurant) }
+        format.js
+      end
     else
-      render 'restaurants/show'
+      respond_to do |format|
+        format.html { render 'restaurants/show' }
+        format.js
+      end
     end
   end
 

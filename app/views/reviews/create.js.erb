@@ -1,0 +1,20 @@
+// set inner HTML of form to the given HTML
+function refreshForm(innerHTML) {
+  const newReviewForm = document.getElementById('new_review');
+  newReviewForm.innerHTML = innerHTML;
+}
+
+// add new review HTML to the end of the list of reviews
+function addReview(reviewHTML) {
+  const reviews = document.getElementById('reviews');
+  reviews.insertAdjacentHTML('beforeend', reviewHTML);
+}
+
+<% if @review.errors.any? %>
+  <%# Note: @review will be the Review object from the controller, with its invalid data included. %>
+  refreshForm('<%= j render "reviews/form", restaurant: @restaurant, review: @review %>');
+<% else %>
+  addReview('<%= j render "reviews/show", review: @review %>');
+  <%# Render the Reviews form with a fresh new Review object, for an empty form. %>
+  refreshForm('<%= j render "reviews/form", restaurant: @restaurant, review: Review.new %>');
+<% end %>
